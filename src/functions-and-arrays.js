@@ -215,27 +215,49 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
+
+
+
+function transpose(matrix) {
+  return matrix[0].map((col, i) => matrix.map(row => row[i])); // SEARCH ABOUT IT 
+}
+
 function greatestProduct(myMatrix) {
-  let total4Sum = 0;
-  let maxIndex = myMatrix[0].length;
 
-  for (row of myMatrix) {
-    let row4MaxSum = 0;
-    let elIndex = 0;
-    let counter = 0;
+  let max4Product = 1;
+  let transposedMatrix = transpose(myMatrix); // transpose the matrix
 
-    while (elIndex < maxIndex) {
-      row4MaxSum += row[elIndex];
-      elIndex++
-      counter++
-      if (counter % 3 === 0) {
-        elIndex = 0;
-        counter -= 2
+  let twoShapesMat = [transposedMatrix, myMatrix]
+
+  for (mat of twoShapesMat) {
+    let maxIndex = matrix[0].length;
+
+    for (row of mat) {
+      for (let i = 0; i < maxIndex - 3; i++) {
+        let arraySlice = row.slice(i, i + 4);
+        if (arraySlice.length < 4) {
+          continue;
+        } else {
+          // console.log(arraySlice);
+          let prdSlice = arraySlice.reduce((a, b) => a * b, 1);
+          max4Product = Math.max(prdSlice, max4Product);
+          // console.log(prdSlice);
+        }
       }
     }
   }
+  return max4Product;
 }
 
+// TESTING
+// const m2 = [[1, 2, 3, 4, 5],
+// [1, 20, 3, 4, 5],
+// [1, 20, 3, 4, 5],
+// [1, 20, 3, 4, 5],
+// [1, 4, 3, 4, 5]]
+
+
+console.log(greatestProduct(matrix));
 
 
 
