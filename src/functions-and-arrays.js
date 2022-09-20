@@ -1,24 +1,66 @@
 // Iteration #1: Find the maximum
-function maxOfTwoNumbers() {}
+function maxOfTwoNumbers(numberOne, numberTwo) {
+  if (numberOne > numberTwo) {
+    return numberOne;
+  } else if (numberOne < numberTwo) {
+    return numberTwo;
+  } else {
+    return numberOne;
+  }
+}
 
 
 
 // Iteration #2: Find longest word
 const words = ['mystery', 'brother', 'aviator', 'crocodile', 'pearl', 'orchard', 'crackpot'];
 
-function findLongestWord() {}
+function findLongestWord(myArray) {
+  let longestWord = "";
+
+  if (myArray.length > 0) {
+    myArray.forEach(element => {
+      if (element.length > longestWord.length) {
+        longestWord = element;
+      }
+    });
+    return longestWord;
+  } else {
+    return null;
+  }
+}
 
 
 
 // Iteration #3: Calculate the sum
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
-function sumNumbers() {}
-
+function sumNumbers(myArray) {
+  let sumOfAll = 0;
+  for (number of myArray) { //using for of syntax to vary a little. for off goes over all the elements of an array. While for in goes over the index
+    sumOfAll += number;
+  }
+  return sumOfAll;
+}
 
 
 // Iteration #3.1 Bonus:
-function sum() {}
+function sum(saladArray) {
+  let sumOfAllSalad = 0;
+  saladArray.forEach(function (el) {
+    if (typeof el === "string") {
+      let stringElementLenght = el.length;
+      sumOfAllSalad += stringElementLenght;
+    } else if (typeof el === "boolean") {
+      // true is equal to 1 and false is equal to 0 and since javaScript allows type coerce we can sum boolean with number types
+      sumOfAllSalad += el;
+    } else if (typeof el === "number") {
+      sumOfAllSalad += el;
+    } else {
+      throw Error("Unsupported data type sir or ma'am");
+    }
+  })
+  return sumOfAllSalad;
+}
 
 
 
@@ -26,16 +68,46 @@ function sum() {}
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
-function averageNumbers() {}
+function averageNumbers(arryForAverage) {
+  if (arryForAverage.length < 1) {
+    return null;
+  } else {
+    const arraySize = arryForAverage.length;
+    const totalSum = sumNumbers(arryForAverage);
+    const average = totalSum / arraySize;
+    return average;
+  }
+}
 
 
 // Level 2: Array of strings
 const wordsArr = ['seat', 'correspond', 'linen', 'motif', 'hole', 'smell', 'smart', 'chaos', 'fuel', 'palace'];
 
-function averageWordLength() { }
+function averageWordLength(arrayOfWords) {
+  if (arrayOfWords.length < 1) {
+    return null
+  }
+  else {
+    const numberWords = arrayOfWords.length;
+    const numberOfCharacters = sum(arrayOfWords);
+    const averageCharacterPerWord = numberOfCharacters / numberWords;
+    return averageCharacterPerWord;
+  }
+}
 
-// Bonus - Iteration #4.1
-function avg() {}
+
+// Bonus - Iteration #4.3
+function avg(saladArray) {
+  if (saladArray.length < 1) {
+    return null
+  }
+  else {
+    const numberOfElements = saladArray.length;
+    const total = sum(saladArray);
+    const average = total / numberOfElements;
+    return average;
+  }
+}
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -52,15 +124,44 @@ const wordsUnique = [
   'bring'
 ];
 
-function uniquifyArray() {}
+function uniquifyArray(arrayOfWords) {
+  if (arrayOfWords.length < 1) {
+    return null;
+  } else {
+    const filteredArray = arrayOfWords.filter(function (word, index) {
+      let notDuplicate = arrayOfWords.indexOf(word) === index;
+      return notDuplicate;
+    })
+    return filteredArray;
+  }
+}
+
+// REFERENCE => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter 
+// REFERENCE 2 => https://dev.to/soyleninjs/3-ways-to-remove-duplicates-in-an-array-in-javascript-259o
 
 
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() {}
+function doesWordExist(arrayOfWords, searchWord) {
+  let exists = null;
 
+  if (arrayOfWords.length < 1) {
+    return exists;
+  }
+  for (let i = 0; i < arrayOfWords.length; i++) {
+    if (arrayOfWords[i] === searchWord) {
+      exists = true;
+      return exists;
+    }
+  }
+  exists = false;
+  return exists;
+}
+
+// NOTE WE CANNOT BREAK A FOREACH LOOP NOT WITH A BREAK NOT WITH A RETURN.
+// IN OTHER HADS A FOR LOOP CAN BE STOPED WITH A BREAK STATEMENT OR A RETURN STATEMENT
 
 
 // Iteration #7: Count repetition
@@ -78,7 +179,15 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes() {}
+function howManyTimes(arrayOfWords, wordToSearch) {
+  let numberOfOccurences = 0;
+  arrayOfWords.forEach(word => {
+    if (word === wordToSearch) {
+      numberOfOccurences++;
+    }
+  })
+  return numberOfOccurences;
+}
 
 
 
@@ -106,7 +215,26 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(myMatrix) {
+  let total4Sum = 0;
+  let maxIndex = myMatrix[0].length;
+
+  for (row of myMatrix) {
+    let row4MaxSum = 0;
+    let elIndex = 0;
+    let counter = 0;
+
+    while (elIndex < maxIndex) {
+      row4MaxSum += row[elIndex];
+      elIndex++
+      counter++
+      if (counter % 3 === 0) {
+        elIndex = 0;
+        counter -= 2
+      }
+    }
+  }
+}
 
 
 
